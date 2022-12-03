@@ -206,18 +206,20 @@ class Stat:
     def h_n(self ):
 
         fa = 1
-
+        d = 0
         for i in range(6):
-         
-            if (self.board[2][i] == 0):
-                 fa += 2
-            elif (self.board[2][i] != 5):
-                 fa += 3
-            else:
-                break
 
-        # fa *=-1
-        self.g_n += fa
+            if ( self.board[2][i] == 0):
+                d += 3
+            elif(self.board[2][i] == 5 ):
+                break
+            else:
+                d+=0
+                
+ 
+        
+        # d*= -1
+        self.g_n += d
 
 
 # !         <<  Ai TIME  >>>         
@@ -367,14 +369,11 @@ def INT_car_Mian(sta : Stat) :
     sta.set_car_in_Board(red_car)
 
             # name , Type , Row (X) , col (Y)
-  
-            # name , Type , Row (X) , col (Y)
     Car_ = [
-        cars('A',4,2,2) ,
-        cars('B',3,4,3) ,
-        cars('c',2,4,0) ,
-        cars('D',2,5,2) ,
+        cars('A',4,2,0) ,
+        cars('B',3,2,2) ,
     ]
+
     for i in Car_:
         sta.set_car_in_Board(i)
 
