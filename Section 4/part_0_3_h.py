@@ -372,8 +372,9 @@ def INT_car_Mian(sta : Stat) :
     Car_ = [
         cars('A',4,2,2) ,
         cars('B',3,4,3) ,
+                            # 120
         cars('c',2,4,0) ,
-        cars('D',2,5,2) ,
+        # cars('D',2,5,2) ,
     ]
     for i in Car_:
         sta.set_car_in_Board(i)
@@ -386,7 +387,7 @@ if __name__ == '__main__':
 
     INT_car_Mian(s_)
     s_.show_Board()
-    exit(0)
+    # exit(0)
     print("\n~~~~~~~~~~~~~~\n")
 
     s_.set_move_of_all_car() 
@@ -413,7 +414,7 @@ if __name__ == '__main__':
 
         # Cu_stat = List_of_min_Stat.pop(0)
 
-        min_Val = 10000 #max_int
+        min_Val = 100000 #max_int
         cu_ind = -1
         for i in range(len(List_of_min_Stat)):
             
@@ -422,9 +423,14 @@ if __name__ == '__main__':
             if(tmp_val < min_Val) :
                 min_Val = tmp_val
                 cu_ind = i
-          
 
         Cu_stat = List_of_min_Stat.pop(cu_ind)
+
+        
+        if(taad_takrar % 5000 <= 2  ):
+            Cu_stat.show_Board()
+            input(">> ")
+
 
         if(is_goald(Cu_stat)):
 

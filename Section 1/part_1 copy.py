@@ -1,49 +1,39 @@
 
-# todo: چک کردن کل مخصوصا ماشین قرمز را و این که الکوریتم .،. DFS است یا BFS آخر 
-
-import copy
-
 class cars:
     
     def __init__(self, Name_ = 'No name',Tupe_ = -1 ,r = -1,c =-1) :
         
         self.name_ = Name_
-      
-         #
-            # !type 5 ==> main car
-            # type 1 and 2 : Horizontal
-            # type 3 and 4 : Vertical
-      
+        
+        # !type 5 ==> main car
+        # type 1 and 2 : Horizontal
+        # type 3 and 4 : Vertical
         self.type_ = Tupe_
         
         self.row_  = r
-        self.column_  = c
+        self.cow_  = c
 
-                  # Front   Back
+        # Front   Back
         self.move=[False , False]  # Front   Back
 
     def showinfo(self):
 
         print(" <<< SHOWINFO >>> ")
+
         print("Name: ",self.name_ , '   type: ',self.type_)
         print('(x,y) :  ',self.row_, ' , ',self.cow_)
         print('(F,B) : ',self.move)
         print(" <<< END_SHOWINFO >>> ")
 
-    def showinfo_2(self):
 
-        print("Name: ",self.name_ , ' type: ',self.type_ ,end=' ')
-        print('(x,y): ',self.row_,',',self.column_,end=' ')
-        print('(F,B): ',self.move,end =' ')
 
 
 class Stat:
     # all_car = [cars]
 
     def __init__(self) :
-        
-        self.board=[
-        #col 0 1 2 3 4 5
+        self.bord=[
+        #cow 0 1 2 3 4 5
             [0,0,0,0,0,0], # Row 0
             [0,0,0,0,0,0], # Row 1
             [0,0,0,0,0,0], # Row 2
@@ -54,14 +44,12 @@ class Stat:
         
         tmp_car = cars()
         self.all_car = [tmp_car]
-
-        self.Tra = []
-        self.g_n = 0
-
-    def show_Board(self) :
+    
+    def show_Bord(self) :
         for i in range(6):
+            # print('  >> ')
             for j in range(6):
-                print('  ',self.board[i][j],end = '')
+                print('  ',self.bord[i][j],end = '')
             print()
 
     def show_cars(self) :
@@ -71,36 +59,37 @@ class Stat:
             index_+=1
             i.showinfo()
 
-    def set_car_in_Board(self, car : cars ) :
+    def set_car_in_Bord(self, car : cars ) :
         
         self.all_car.append(car)
 
-        self.board[car.row_][car.column_] = car.type_
+        self.bord[car.row_][car.cow_] = car.type_
 
         # ! فقط ماشین اصلی هست که سرو تهش با ماشین های نوع یک فرق دارد
         tmp_type = car.type_ 
-        
         if (tmp_type == 5):
-            self.board[car.row_][car.column_ - 1] = car.type_
+            self.bord[car.row_][car.cow_ - 1] = car.type_
         
         elif(tmp_type == 1):
-            self.board[car.row_][car.column_ + 1] = car.type_
+            self.bord[car.row_][car.cow_ + 1] = car.type_
+       
         elif(tmp_type == 2):
-            self.board[car.row_][car.column_ + 1] = car.type_
-            self.board[car.row_][car.column_ + 2] = car.type_
+            self.bord[car.row_][car.cow_ + 1] = car.type_
+            self.bord[car.row_][car.cow_ + 2] = car.type_
 
 
         elif(tmp_type == 3):
-            self.board[car.row_ -1 ][car.column_ ] = car.type_
+            self.bord[car.row_ -1 ][car.cow_ ] = car.type_
         elif(tmp_type == 4):
-            self.board[car.row_ - 1][car.column_ ] = car.type_
-            self.board[car.row_ - 2][car.column_ ] = car.type_
+            self.bord[car.row_ - 1][car.cow_ ] = car.type_
+            self.bord[car.row_ - 2][car.cow_ ] = car.type_
 
-    def set_move_car(self, car : cars): # ==> car.Move =[F = ? , B =  ?] ;
+
+    def set_move_car(self, car : cars):
         
         type_of_car_is_ = car.type_
-        
-        x_is , y_is = car.row_ , car.column_
+        x_is , y_is = car.row_ , car.cow_
+
 
         # todo: می خواهیم دوتا متغییر حرکت رو به جلو و یا حرک رو به عقب هر ماشین ورودی را چک کنیم و یادمان هم هست که در بورد ها نوشتیم که چی به جی هست
 
@@ -112,13 +101,13 @@ class Stat:
             y_b , y_f = y_is + 1 , y_is - 2
             
             # <<  Back >>
-            if (y_b <=5 and self.board[x_is][y_b] == 0):
+            if (y_b <=5 and self.bord[x_is][y_b] == 0):
                 car.move[1] = True
             else:
                 car.move[1] = False
            
             # << Front >>
-            if (y_f >=0  and self.board[x_is][y_f] == 0):
+            if (y_f >=0  and self.bord[x_is][y_f] == 0):
                   car.move[0] = True
             else:
                   car.move[0] = False
@@ -132,13 +121,13 @@ class Stat:
             y_b , y_f = y_is - 1 , y_is + 2
             
             # <<  Back >>
-            if(y_b >= 0 and self.board[x_is][y_b] == 0):
+            if(y_b >= 0 and self.bord[x_is][y_b] == 0):
                 car.move[1] = True
             else:
                 car.move[1] = False
             
             # << Front >>
-            if (y_f <=5  and self.board[x_is][y_f] == 0):
+            if (y_f <=5  and self.bord[x_is][y_f] == 0):
                   car.move[0] = True
             else:
                   car.move[0] = False
@@ -150,13 +139,13 @@ class Stat:
             y_b , y_f = y_is - 1 , y_is + 3
             
             # <<  Back >>
-            if(y_b >= 0 and self.board[x_is][y_b] == 0):
+            if(y_b >= 0 and self.bord[x_is][y_b] == 0):
                 car.move[1] = True
             else:
                 car.move[1] = False
            
             # << Front >>
-            if (y_f <=5  and self.board[x_is][y_f] == 0):
+            if (y_f <=5  and self.bord[x_is][y_f] == 0):
                   car.move[0] = True
             else:
                   car.move[0] = False
@@ -170,13 +159,13 @@ class Stat:
             x_b , x_f = x_is + 1, x_is - 2
 
             # << Front >>
-            if (x_f >= 0  and self.board[x_f][y_is] == 0):
+            if (x_f >= 0  and self.bord[x_f][y_is] == 0):
                   car.move[0] = True
             else:
                   car.move[0] = False
             
             # << Back >>
-            if(x_b <= 5 and self.board[x_b][y_is] == 0):
+            if(x_b <= 5 and self.bord[x_b][y_is] == 0):
                   car.move[1] = True
             else:
                   car.move[1] = False
@@ -188,89 +177,72 @@ class Stat:
             x_b , x_f = x_is + 1, x_is - 3
 
             # << Front >>
-            if (x_f >= 0  and self.board[x_f][y_is] == 0):
+            if (x_f >= 0  and self.bord[x_f][y_is] == 0):
                   car.move[0] = True
             else:
                   car.move[0] = False
             
             # << Back >>
-            if(x_b <= 5 and self.board[x_b][y_is] == 0):
+            if(x_b <= 5 and self.bord[x_b][y_is] == 0):
                   car.move[1] = True
             else:
                   car.move[1] = False
 
+
     def set_move_of_all_car(self):
+      
         for i in self.all_car:
             self.set_move_car(i)
+            # i.showinfo()
+            # print()
 
-    def h_n(self ):
+  
 
-        fa = 1
-
-        for i in range(6):
-         
-            if (self.board[2][i] == 0):
-                 fa += 2
-            elif (self.board[2][i] != 5):
-                 fa += 3
-            else:
-                break
-
-        # fa *=-1
-        self.g_n += fa
-
-
-# !         <<  Ai TIME  >>>         
+# !         <<  AI TIME  >>>         
 
 #! هدف نهایی
     # def Tree_search(p,F):
     #     INT()
-    #  (0) while(1){
-        #  (1) if( MT() ) { return Failure or  exit(-3) }
-        #  (2) cu = fringe.Remove()
-        #  (3) if( GOAL ( cu )) {retuen "Sooution"}
-        #  (4) else
-        #           { fringe.push("EXPAND(cu)") }
+    #   while(1){
+        #   if( len(fringe) == 0 ) { return exit(-3) Failure}
+        #   cu = fringe.Remove()
+        #   if( GOAL ( cu )) {retuen "Sooution"}
+        #   else
+        #  { fringe.push("EXPAND(cu)") }
     #   }
 
 
 
-def MT() -> bool:
-    return False
-
-    # T ==> Yes
-def is_goald(stat_ : Stat) -> bool: 
-    return (stat_.board[2][0] == 5)
-
-def is_selection(car_ : cars) -> bool: # Bool >> T = yes /\ F : No
+def is_selection(car_ : cars): # Bool >> T = yes F : No
     return car_.move[0] or car_.move[1]
 
-                            # ( i ( car) , chr = 'F' OR 'B' , index_of_car )
-def Make_test_Fringe(S : Stat) -> list:  #  << Mina Fun>>
 
-        Test_Fringe =[] # ( i (type : car) , chr = 'F' OR 'B' , index_of_car )
+def Make_test_Fringe(S : Stat):
 
-        index_of_car_in_Stat_all_car = 0
-        
+        Test_Fringe =[] # ( i (type car) , chr = 'F' OR 'B' , index_of_car.... )
+
+        index_of_car_in_Stat_all_car = 0        
         for i in S.all_car :
             
             if(is_selection(i)):
 
                 if(i.move[0]):
-
-                    Test_Fringe.append( (i,'F',index_of_car_in_Stat_all_car) )
+                  
+                    # i.showinfo()
+                    Test_Fringe.append((i,'F',index_of_car_in_Stat_all_car))
                 
                 if(i.move[1]):
-
+                    
+                    # i.showinfo()
                     Test_Fringe.append((i,'B',index_of_car_in_Stat_all_car))
 
             index_of_car_in_Stat_all_car +=1
         
-        # print('len (Test_Fringe): ',len(Test_Fringe)) 
+        print(len(Test_Fringe)) 
         return Test_Fringe
 
-                        #  (  (car) i , (char) 'F' OR 'B' , (int)  index_of_car.... )
-def do_action( s : Stat , AA) -> Stat:
+                        #  (  (type car) i , (char) 'F' OR 'B' , (int)  index_of_car.... )
+def do_action( s:Stat , A):
     #
         # todo :قرار است همین اکشنی که به شکل یک تاپل سه تایی است را روی همین استیت اعمال کنیم
         # ! اول اون ماشین را کلا حذف کن چه تو نقشه و چه تو لیست ماشین ها و چه هرجای دیگه که یادم رفت
@@ -278,167 +250,132 @@ def do_action( s : Stat , AA) -> Stat:
         # مقدار سوم تاپل اکشن ورودی برای این است مه تو لیست ماشین های همان استیت بشود حذف کرد
         #  //پایان کد نویسی امروز 3 شنبه ساعت 12
 
-    A = copy.deepcopy(AA)
-    tmp_s = copy.deepcopy(s)
+    print('--> ',A[2])
    
-    cur_car_is = A[0] 
-    cur_car_is : cars
-    
+    cur_car_is = A[0]
     x_  = cur_car_is.row_
-    y_ = cur_car_is.column_
+    y_ = cur_car_is.cow_
     
     tmp_type =  cur_car_is.type_
 
-    tmp_s.board[x_][y_] = 0
+    s.bord[x_][y_] = 0
+    # exit(0)
 
     if (tmp_type == 5):
-        tmp_s.board[x_][y_ - 1] = 0
+        s.bord[x_][y_ - 1] = 0
 
         if (A[1] == 'F'):
-             cur_car_is.column_ =  cur_car_is.column_ - 1
+             cur_car_is.cow_ =  cur_car_is.cow_ - 1
 
-        else: # Ba
-             cur_car_is.column_ =  cur_car_is.column_ + 1
+        else:
+             cur_car_is.cow_ =  cur_car_is.cow_ + 1
 
     elif(tmp_type == 1):
-        tmp_s.board[x_][y_ + 1] = 0
+        s.bord[x_][y_ + 1] = 0
         
         if (A[1] == 'F'):
-             cur_car_is.column_ =  cur_car_is.column_ + 1
+             cur_car_is.cow_ =  cur_car_is.cow_ + 1
 
-        else: # Back
-             cur_car_is.column_ =  cur_car_is.column_ - 1
+        else:
+             cur_car_is.cow_ =  cur_car_is.cow_ - 1
+
+
     elif(tmp_type == 2):
-            tmp_s.board[x_][y_+ 1] = 0
-            tmp_s.board[x_][y_ + 2] = 0
+            s.bord[x_][y_+ 1] = 0
+            s.bord[x_][y_ + 2] = 0
 
             if (A[1] == 'F'):
-                cur_car_is.column_ =  cur_car_is.column_ + 1
+                cur_car_is.cow_ =  cur_car_is.cow_ + 1
 
-            else: # B
-                cur_car_is.column_ =  cur_car_is.column_ - 1
+            else:
+                cur_car_is.cow_ =  cur_car_is.cow_ - 1
 
     # ! type 3 and 4
     elif(tmp_type == 3):
-            tmp_s.board[x_ -1 ][y_ ] = 0
+            s.bord[x_ -1 ][y_ ] = 0
 
             if (A[1] == 'F'):
                 cur_car_is.row_ =  cur_car_is.row_ - 1
 
             else:
-                cur_car_is.row_ =  cur_car_is.row_ + 1 
+                cur_car_is.row_ =  cur_car_is.row_ + 1
+
+    
     elif(tmp_type == 4):
-        tmp_s.board[x_ - 1][y_ ] = 0
-        tmp_s.board[x_ - 2][y_ ] = 0
+        s.bord[x_ - 1][y_ ] = 0
+        s.bord[x_ - 2][y_ ] = 0
         if (A[1] == 'F'):
             cur_car_is.row_ =  cur_car_is.row_ - 1
+
         else:
             cur_car_is.row_ =  cur_car_is.row_ + 1
 
 
-    #! remot form ALl_Car ?
-    tmp_s.all_car.pop(A[2])
-
-
+    #! remot form ALl_Car
+    s.all_car.pop(A[2])
 
     #! AdD Time
-    tmp_s.set_car_in_Board(cur_car_is)
-    # tmp_s.set_move_car(cur_car_is)
-    #! NEW
-    for i in tmp_s.all_car:
-        tmp_s.set_move_car(i)
-    
+    s.set_car_in_Bord(cur_car_is)
+    s.set_move_car(cur_car_is)
 
-    
-
-    #! g(N)
-    tmp_s.g_n += 1
-
-    #! H(N)
-    tmp_s.h_n()
-
-
-    return tmp_s
-
-
-def INT_car_Mian(sta : Stat) :
-    
-    red_car = cars('red_car',5,2,4)
-    sta.set_car_in_Board(red_car)
-
-            # name , Type , Row (X) , col (Y)
-  
-            # name , Type , Row (X) , col (Y)
-    Car_ = [
-        cars('A',4,2,2) ,
-        cars('B',3,4,3) ,
-        cars('c',2,4,0) ,
-        cars('D',2,5,2) ,
-    ]
-    for i in Car_:
-        sta.set_car_in_Board(i)
-
-
+    # print("NOT YET")
 
 if __name__ == '__main__':
 
+    # // نوع دو را این که الان چه خانه ای خالی دارد را چک کن
+    
+    red_car = cars('red_car',5,2,4)
+    car2  = cars('ali',1,0,4)
+    
+    car3  = cars('Reza' ,4,2,0)
+    car4  = cars('Reza2',4,5,2)
+    car5  = cars('Reza2',1,4,0)
+    car6  = cars('Reza2',3,5,3)
+    car7  = cars('Reza2',3,1,3)
+    car8  = cars('Reza2',1,3,3)
+
     s_ = Stat()
 
-    INT_car_Mian(s_)
-    s_.show_Board()
-    exit(0)
-    print("\n~~~~~~~~~~~~~~\n")
+        
+    s_.set_car_in_Bord(red_car)
+    s_.set_car_in_Bord(car2)
+
+    s_.set_car_in_Bord(car3)
+    s_.set_car_in_Bord(car4)
+    s_.set_car_in_Bord(car5)
+    s_.set_car_in_Bord(car6)
+    s_.set_car_in_Bord(car7)
+    s_.set_car_in_Bord(car8)
+
+
+
+    s_.show_Bord()
+    print("$$$$$$$$$$$$$$$")
 
     s_.set_move_of_all_car() 
     Test_1 = Make_test_Fringe(s_)
+   
+    
+    
+    print()
+    foooo = 3
+    Test_1[foooo][0].showinfo()
+    print(Test_1[foooo][1])
+    print(Test_1[foooo][2])
+   
+    print("****** Befor Do ACtion: ")
+    s_.all_car[Test_1[foooo][2]].showinfo()
 
-    # print(Test_1)
-    # exit(0)   
-    # ! تا الان اوکی هست
+    # exit()
+    # print(len(s_.all_car))
 
-    List_of_min_Stat = [s_]
+    print("$$$$$$$$$$$$")
+    do_action(s_,Test_1[foooo])
+    s_.show_Bord()
+   
 
-    taad_takrar = 0
 
-    while (True):
-
-        print('taad_takrar -> ',taad_takrar)
-        taad_takrar+=1
-
-        if(len(List_of_min_Stat) == 0):
-            print(" :( ")
-            exit(-3)
-
-        #! مال جلسه جدید
-
-        # Cu_stat = List_of_min_Stat.pop(0)
-
-        min_Val = 10000 #max_int
-        cu_ind = -1
-        for i in range(len(List_of_min_Stat)):
-            
-            tmp_val= List_of_min_Stat[i].g_n
-
-            if(tmp_val < min_Val) :
-                min_Val = tmp_val
-                cu_ind = i
-          
-
-        Cu_stat = List_of_min_Stat.pop(cu_ind)
-
-        if(is_goald(Cu_stat)):
-
-                    print(" :)")
-                    print(len(Cu_stat.Tra))
-                    for i in range(len(Cu_stat.Tra)):
-                        (Cu_stat.Tra[i][0]).showinfo_2()
-                        print(">>>> ",Cu_stat.Tra[i][1])
-                       
-                    exit(+1)
-      
-        Test_2 = Make_test_Fringe(Cu_stat)
-
-        for i in Test_2:
-            TMP_Time =  do_action(Cu_stat,i)
-            TMP_Time.Tra.append(i)
-            List_of_min_Stat.append(TMP_Time)
+    # print("****** After Do ACtion: ")
+    # Test_2 = Make_test_Fringe(s_)
+    # # print('EE : ',len(Test_2))
+    # s_.all_car[Test_2[foooo][2]].showinfo()

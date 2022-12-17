@@ -372,8 +372,10 @@ def INT_car_Mian(sta : Stat) :
     Car_ = [
         cars('A',4,2,2) ,
         cars('B',3,4,3) ,
+                # 2516
+                
         cars('c',2,4,0) ,
-        cars('D',2,5,2) ,
+        # cars('D',2,5,2) ,
     ]
     for i in Car_:
         sta.set_car_in_Board(i)
@@ -386,7 +388,7 @@ if __name__ == '__main__':
 
     INT_car_Mian(s_)
     s_.show_Board()
-    exit(0)
+    # exit(0)
     print("\n~~~~~~~~~~~~~~\n")
 
     s_.set_move_of_all_car() 
@@ -411,20 +413,22 @@ if __name__ == '__main__':
 
         #! مال جلسه جدید
 
-        # Cu_stat = List_of_min_Stat.pop(0)
+        #! << BFS time >> 
+        
+        Cu_stat = List_of_min_Stat.pop(0)
 
-        min_Val = 10000 #max_int
-        cu_ind = -1
-        for i in range(len(List_of_min_Stat)):
-            
-            tmp_val= List_of_min_Stat[i].g_n
+        # min_Val = 10000 #max_int
+        # cu_ind = -1
+        # for i in range(len(List_of_min_Stat)):
+        #     tmp_val= List_of_min_Stat[i].g_n
+        #     if(tmp_val < min_Val) :
+        #         min_Val = tmp_val
+        #         cu_ind = i
+        # Cu_stat = List_of_min_Stat.pop(cu_ind)
 
-            if(tmp_val < min_Val) :
-                min_Val = tmp_val
-                cu_ind = i
-          
-
-        Cu_stat = List_of_min_Stat.pop(cu_ind)
+        # if(taad_takrar % 10000 == 0):
+        #     Cu_stat.show_Board()
+        #     input('TEST>> ')
 
         if(is_goald(Cu_stat)):
 
@@ -442,3 +446,6 @@ if __name__ == '__main__':
             TMP_Time =  do_action(Cu_stat,i)
             TMP_Time.Tra.append(i)
             List_of_min_Stat.append(TMP_Time)
+
+
+            # 44699 58099
